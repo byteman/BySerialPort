@@ -1,3 +1,6 @@
+BySerialPort:
+	一个可移植的跨平台的串口库。
+
 include 库的头文件
 linux linux下的工程文件
 src 库的源代码
