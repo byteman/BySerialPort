@@ -10,6 +10,7 @@ std::string path = "COM2";
 #include <cstdio>
 std::string path = "/dev/ttyUSB0";
 #endif
+#include <Poco/Thread.h>
 
 #include "serial/serial.h"
 #ifdef _WIN32
@@ -18,12 +19,11 @@ int _tmain(int argc, _TCHAR* argv[])
 int main(int argc, const char* argv[])
 #endif
 {
-	printf("hello\n");
-	
+
 	serial::Serial port1;
 
 	port1.setPort(path);
-	
+    port1.setBaudrate (115200);
 	port1.open();
 
 	port1.write("hello world");
@@ -33,14 +33,11 @@ int main(int argc, const char* argv[])
 	//port1.setTimeout(1000);
 	while((size = port1.available()) < 10)
 	{
-		//Sleep(1000);
-		port1.read(buf,10);
-		printf("size=%d\n",size);
+        Poco::Thread::sleep (1000);
+        printf("available size=%d\n",size);
 	}
-	
+    port1.read(buf,10);
 
-	
-	
 	printf("recv %s\n",buf);
 	return 0;
 }

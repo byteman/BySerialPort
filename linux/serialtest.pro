@@ -5,7 +5,7 @@ CONFIG -= qt
 SOURCES += ../test/SerialTest.cpp
 
 INCLUDEPATH += ../include
-LIBS+=-lbySerialPort -lrt
+LIBS+=-lbySerialPort -lrt -lPocoFoundation
 OBJECTS_DIR += ./obj
 linux-arm-g++ {
     message(g++ = linux-arm-g++ compile)
