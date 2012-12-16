@@ -12,12 +12,11 @@ std::string path = "/dev/ttyUSB0";
 #endif
 #include <Poco/Thread.h>
 
+#define MAX_BUF 128
+unsigned char buf[MAX_BUF+1]={0,};
 #include "serial/serial.h"
-#ifdef _WIN32
-int _tmain(int argc, _TCHAR* argv[])
-#else
+
 int main(int argc, const char* argv[])
-#endif
 {
 
 	serial::Serial port1;
@@ -26,19 +25,31 @@ int main(int argc, const char* argv[])
     port1.setBaudrate (115200);
 	port1.open();
 
-	port1.write("hello world");
-	unsigned char buf[32]={0,};
 	size_t size = 0;
-	port1.setReadTimeout(1000);
-	//port1.setTimeout(1000);
-	while((size = port1.available()) < 10)
-	{
-        Poco::Thread::sleep (1000);
-        printf("available size=%d\n",size);
-	}
-    port1.read(buf,10);
 
-	printf("recv %s\n",buf);
-	return 0;
+	port1.setReadTimeout(1000);
+    port1.setWriteTimeout(1000);
+
+    while(1)
+    {
+        size = port1.available();
+        if(size > 0)
+        {
+            memset(buf,0,MAX_BUF);
+            if(port1.read(buf,size>MAX_BUF?MAX_BUF:size))
+            {
+                buf[size] = '\0';
+                printf("received: %s\n",buf);
+                port1.write (buf,size);
+            }
+        }
+        else
+        {
+            printf("wait receive ....\n");
+            Poco::Thread::sleep (1000);
+        }
+
+    }
+    return 0;
 }
 
