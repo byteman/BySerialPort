@@ -11,6 +11,7 @@
 #include "serial/impl/unix.h"
 #endif
 
+
 using std::invalid_argument;
 using std::min;
 using std::numeric_limits;
@@ -223,6 +224,12 @@ Serial::write (const string &data)
   ScopedWriteLock(this->pimpl_);
   return this->write_ (reinterpret_cast<const uint8_t*>(data.c_str()),
                        data.length());
+}
+size_t
+Serial::writeByte(unsigned char ch)
+{
+    ScopedWriteLock(this->pimpl_);
+    return this->write_ (&ch,1);
 }
 
 size_t

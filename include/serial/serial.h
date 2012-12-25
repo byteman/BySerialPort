@@ -353,6 +353,8 @@ public:
   size_t
   write (const std::string &data);
 
+  size_t
+  writeByte(unsigned char ch);
   /*! Sets the serial port identifier.
    *
    * \param port A const std::string reference containing the address of the
