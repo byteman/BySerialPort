@@ -2,15 +2,16 @@
 //
 
 #ifdef _WIN32
-#include "stdafx.h"
 #include <Windows.h>
+#include <iostream>
 std::string path = "COM2";
+
 #else
 #include <iostream>
 #include <cstdio>
 std::string path = "/dev/ttyUSB0";
 #endif
-#include <Poco/Thread.h>
+//#include <Poco/Thread.h>
 
 #define MAX_BUF 128
 unsigned char buf[MAX_BUF+1]={0,};
@@ -46,7 +47,11 @@ int main(int argc, const char* argv[])
         else
         {
             printf("wait receive ....\n");
-            Poco::Thread::sleep (1000);
+#ifdef _WIN32
+            Sleep(1000);
+#else
+			sleep(1);
+#endif
         }
 
     }
