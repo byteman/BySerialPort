@@ -79,8 +79,8 @@ public:
           stopbits_t stopbits = stopbits_one,
           flowcontrol_t flowcontrol = flowcontrol_none);
 
-  void SetReadTimeouts(uint32_t timeout_ms);
-  void SeWriteTimeouts(uint32_t timeout_ms);
+  void setReadTimeout(uint32_t timeout_ms);
+  void setWriteTimeout(uint32_t timeout_ms);
 
   size_t
   read (uint8_t *buf, size_t size = 1);

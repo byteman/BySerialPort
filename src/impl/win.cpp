@@ -290,12 +290,12 @@ Serial::SerialImpl::available ()
 
 }
 
-void Serial::SerialImpl::SetReadTimeouts(uint32_t timeout_ms)
+void Serial::SerialImpl::setReadTimeout(uint32_t timeout_ms)
 {
 
 	setTimeout(serial::Timeout::simpleTimeout(timeout_ms)); 
 }
-void Serial::SerialImpl::SeWriteTimeouts(uint32_t timeout_ms)
+void Serial::SerialImpl::setWriteTimeout(uint32_t timeout_ms)
 {
 	setTimeout(serial::Timeout::simpleTimeout(timeout_ms)); 
 }

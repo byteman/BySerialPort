@@ -48,6 +48,16 @@
 #define THROW(exceptionClass, message) throw exceptionClass(__FILE__, \
 __LINE__, (message) )
 
+#ifdef _WIN32
+	#ifdef SERIALPORT_EXPORTS
+		#define SERIALPORT_API __declspec(dllexport)
+	#else
+		#define SERIALPORT_API __declspec(dllimport)
+	#endif
+#else
+	#define  SERIALPORT_API
+#endif
+
 namespace serial {
 
 /*!
@@ -142,7 +152,7 @@ struct Timeout {
 /*!
  * Class that provides a portable serial port interface.
  */
-class Serial {
+class SERIALPORT_API Serial {
 public:
   /*!
    * Creates a Serial object and opens the port if a port is specified, 
